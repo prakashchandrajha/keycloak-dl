@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.7
+    command: start-dev
+    container_name: dl-lib-keycloak-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: 192.168.1.200
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: Aditya623880
+      KC_DB_SCHEMA: public
+      KC_DB_URL_DATABASE: dl-lib-keycloak-dev
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_PROXY_HEADERS: xforwarded
+      KC_PROXY_ADDRESS_FORWARDING: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_PROXY: edge
+      KC_HTTP_ENABLED: "true"
+    ports:
+      - "3001:8080"
+    networks:
+      - docker-postgres-pgadmin_default
+
+networks:
+  docker-postgres-pgadmin_default:
+    external: true
